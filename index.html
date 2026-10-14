@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Roteiro interativo de estudo do caso clínico FSM para Enfermagem Clínica e Cirúrgica.">
+<meta name="theme-color" content="#eef3f3">
+<title>Caso FSM | Enfermagem Clínica e Cirúrgica</title>
+<style>
+:root{
+  --bg:#eef3f3; --card:#ffffff; --ink:#14303a; --mute:#5b727a; --line:#d5e0e2;
+  --teal:#0b7a84; --teal-soft:#dff1f2; --amber:#b8730a; --amber-soft:#fbefd9;
+  --red:#b23a3a; --red-soft:#f8e1e1; --green:#2b7a4b; --green-soft:#def2e5;
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
+h1,h2{font-family:Georgia,"Times New Roman",serif;line-height:1.2;margin:0}
+main{max-width:640px;margin:0 auto;padding:0 14px 90px}
+header{padding:26px 4px 14px}
+header h1{font-size:28px}
+header p{margin:6px 0 0;color:var(--mute);font-size:15px}
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding:8px 0 10px}
+.bar-row{display:flex;justify-content:space-between;font-size:13px;color:var(--mute);margin-bottom:6px}
+.track{height:6px;border-radius:3px;background:var(--line);overflow:hidden}
+.fill{height:100%;width:0;background:var(--teal);transition:width .3s}
+.legend{font-size:13px;color:var(--mute);margin:4px 4px 14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:14px}
+.card.key{border:2px solid var(--teal)}
+.head{display:flex;gap:10px;align-items:flex-start;justify-content:space-between}
+.head h2{font-size:20px}
+.tag{flex:none;font-size:12px;padding:3px 9px;border-radius:99px;background:var(--teal-soft);color:var(--teal);font-weight:600}
+.sub{color:var(--mute);font-size:14px;margin:6px 0 10px}
+.card ul{margin:8px 0;padding-left:20px}
+.card li{margin:5px 0}
+.card b{font-weight:650}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.cell{background:var(--bg);border-radius:10px;padding:9px 11px;font-size:14px}
+.cell small{display:block;color:var(--mute);font-size:12px}
+.cell.bad{background:var(--red-soft)}
+.tl{list-style:none;margin:10px 0;padding:0 0 0 14px;border-left:2px solid var(--teal)}
+.tl li{position:relative;margin:0 0 12px;padding-left:12px}
+.tl li::before{content:"";position:absolute;left:-21px;top:7px;width:10px;height:10px;border-radius:50%;background:var(--teal)}
+.mech{border-left:4px solid var(--amber);background:var(--amber-soft);border-radius:0 10px 10px 0;padding:8px 12px;margin:10px 0;font-size:15px}
+.mech.up{border-color:var(--red);background:var(--red-soft)}
+.mech b{display:block;margin-bottom:2px}
+.seg{display:flex;gap:6px;margin-top:14px}
+.seg button{flex:1;min-height:44px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;font:inherit;font-size:14px;cursor:pointer}
+.seg button[aria-pressed="true"].good{background:var(--green-soft);border-color:var(--green);color:var(--green);font-weight:650}
+.seg button[aria-pressed="true"].mid{background:var(--amber-soft);border-color:var(--amber);color:var(--amber);font-weight:650}
+.seg button[aria-pressed="true"].poor{background:var(--red-soft);border-color:var(--red);color:var(--red);font-weight:650}
+textarea{width:100%;min-height:84px;margin-top:10px;padding:10px 12px;border:1.5px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit;font-size:16px;resize:vertical}
+textarea:focus,button:focus-visible{outline:3px solid var(--teal);outline-offset:1px}
+.check{background:var(--amber-soft);border-radius:10px;padding:10px 14px;font-size:14px}
+.actions{display:flex;gap:8px;margin-top:6px}
+.actions button{flex:1;min-height:48px;border-radius:12px;border:0;font:inherit;font-weight:650;cursor:pointer;background:var(--teal);color:#fff}
+.actions button.alt{background:var(--card);color:var(--ink);border:1.5px solid var(--line)}
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 18px);transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:99px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.on{opacity:1}
+</style>
+</head>
+<body>\n<noscript><p style="padding:16px;background:#fff3cd;color:#5c4400">Ative o JavaScript no navegador para usar as avaliações interativas.</p></noscript>
+<main>
+<header>
+  <h1>Caso FSM</h1>
+  <p>Enfermagem Clínica e Cirúrgica</p>
+</header>
+
+<div class="bar">
+  <div class="bar-row"><span id="count">0 de 8 pontos avaliados</span><span id="tally"></span></div>
+  <div class="track"><div class="fill" id="fill"></div></div>
+</div>
+<p class="legend">Avalie cada ponto como <b>Bom</b>, <b>Mediano</b> ou <b>Ruim</b> e anote o que pode melhorar. Tudo fica salvo neste aparelho.</p>
+
+<div id="cards"></div>
+
+<section class="card" data-id="extra">
+  <div class="head"><h2>Outros pontos que posso incluir</h2></div>
+  <p class="sub">Espaço livre para ideias além do roteiro.</p>
+  <textarea data-note="extra" placeholder="Escreva aqui…" aria-label="Outros pontos a incluir"></textarea>
+</section>
+
+<div class="actions">
+  <button id="copy">Copiar anotações</button>
+  <button id="reset" class="alt">Limpar tudo</button>
+</div>
+</main>
+<div class="toast" id="toast"></div>
+
+<script>
+const SECTIONS=[
+{id:"intro",title:"Identificação e motivo",tag:"Abertura",sub:"Quem é o paciente e por que está internado.",html:`
+<ul><li><b>FSM</b>, acompanhado pela genitora</li><li><b>151 dias</b> de internação (em 07/10/2026)</li><li>Reinternação: <b>rebaixamento de consciência</b> em casa, trazido pelo SAMU</li><li>Precaução de contato por bactéria multirresistente</li></ul>`},
+{id:"hda",title:"História e antecedentes",tag:"Linha do tempo",sub:"Do trauma até a reinternação.",html:`
+<ol class="tl"><li><b>Politrauma com TCE</b><br>admissão inicial, coma vigil</li><li><b>PCR</b><br>evolui com encefalopatia hipóxico-isquêmica</li><li><b>Sepse por CVC</b> (mar/2026)<br><i>Klebsiella pneumoniae</i>; <i>Pseudomonas aeruginosa</i> resistente a meropenem; <i>S. epidermidis</i> resistente a oxacilina</li><li><b>Sarcopenia severa</b>, desmame ventilatório (mai–jun/2026)</li><li><b>Alta e reinternação</b><br>hipoglicemia + hipotensão em domicílio</li></ol>`},
+{id:"adm",title:"Admissão atual",tag:"Sinais vitais",sub:"Hipoglicemia grave e hipotermia, com taquicardia e pressão elevada na chegada.",html:`
+<div class="grid"><div class="cell bad"><small>Glicemia</small>40 mg/dL</div><div class="cell bad"><small>Temperatura</small>34 °C</div><div class="cell"><small>PA</small>145x89 mmHg</div><div class="cell"><small>FC</small>141 bpm</div><div class="cell"><small>FR</small>20 irpm</div><div class="cell"><small>SpO₂</small>93%</div><div class="cell bad"><small>Antes (SAMU, em casa)</small>glicemia 43 mg/dL</div><div class="cell"><small>Antes (SAMU, em casa)</small>PA 90x60 mmHg</div></div>`},
+{id:"exame",title:"Exame físico atual",tag:"Por sistemas",sub:"Como ele está hoje.",html:`
+<ul><li><b>Neuro:</b> vigil, olhos abertos, pupilas isocóricas e fotorreagentes, não contactua</li><li><b>Resp:</b> traqueostomia (PVC 7,5, cuff insuflado), ar ambiente, MV sem ruídos adventícios</li><li><b>CV:</b> normocárdico, normotenso, pulsos fortes, extremidades aquecidas</li><li><b>GI:</b> dieta por GTT 60 mL/h, abdome escavado, RHA presentes</li><li><b>GU:</b> diurese e evacuação espontâneas (fralda)</li><li><b>Pele:</b> LPP grau 4 sacroglútea, curativo limpo e seco</li><li><b>Músculo:</b> acamado, sem mobilidade, emagrecido</li><li><b>Dispositivo:</b> CVC em VSCE</li></ul>`},
+{id:"dx",title:"Diagnósticos e como se conectam",tag:"Fisiopatologia",sub:"Um problema puxa o outro.",html:`
+<ul><li>TCE → encefalopatia hipóxico-isquêmica → não contactua</li><li>Imobilidade → <b>LPP estágio 4</b> e <b>sarcopenia severa</b></li><li>Sarcopenia → <b>fraqueza diafragmática</b> → <b>atelectasia à direita</b></li><li>CVC e internação longa → sepse e bactérias multirresistentes</li><li>Gastroenterocolite bacteriana: já superada</li></ul>`},
+{id:"gli",title:"Glicemia e o trauma",tag:"Pergunta da professora",key:true,sub:"Por que a glicemia oscila (pico e queda) neste paciente.",html:`
+<div class="mech up"><b>Hiperglicemia (resposta ao trauma)</b>O estresse ativa o sistema simpático e o eixo hipotálamo-hipófise-adrenal: catecolaminas, cortisol, glucagon e citocinas. Resultado: resistência à insulina e mais produção de glicose.</div>
+<div class="mech"><b>Hipoglicemia (o que o paciente apresentou)</b><ul style="margin:4px 0 0"><li>Lesão encefálica pode comprometer o eixo hipotálamo-hipofisário (cortisol baixo)</li><li>Sarcopenia e desnutrição: pouco glicogênio e pouco substrato para gliconeogênese</li><li>Dieta por GTT (interrupção ou volume insuficiente) e possível uso de insulina</li><li>Infecção/sepse consome mais glicose; hipotermia agrava</li></ul></div>
+<ul><li><b>Por que importa:</b> hipoglicemia em cérebro já lesado causa dano neurológico secundário</li></ul>`},
+{id:"sae",title:"Assistência de enfermagem (SAE)",tag:"Diagnósticos e cuidados",sub:"Diagnósticos de enfermagem sugeridos e principais cuidados.",html:`
+<ul><li><b>Risco de glicemia instável:</b> HGT seriado, atenção à dieta e à insulina</li><li><b>Integridade tissular prejudicada:</b> curativo da LPP, mudança de decúbito, superfície de alívio</li><li><b>Desobstrução ineficaz de vias aéreas:</b> aspiração, cuff, higiene da traqueostomia</li><li><b>Mobilidade física prejudicada:</b> posicionamento, mobilização passiva</li><li><b>Risco de infecção:</b> precaução de contato, cuidado com CVC</li><li><b>Nutrição desequilibrada:</b> cuidados com GTT, risco de aspiração</li><li><b>Apoio à genitora:</b> orientação e educação em saúde</li></ul>`},
+{id:"fim",title:"Conclusão e referências",tag:"Fechamento",sub:"O que o caso ensina.",html:`
+<ul><li>Paciente crônico complexo: vários sistemas afetados ao mesmo tempo</li><li>Prevenção (LPP, infecção, hipoglicemia) é o centro do cuidado de enfermagem</li><li>Referências em ABNT: diretrizes de LPP, TCE, controle glicêmico e NANDA/NIC/NOC</li></ul>`}
+];
+const KEY="caso-fsm-v3";
+let S={};
+try{S=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){S={}}
+function save(){
+  try { localStorage.setItem(KEY, JSON.stringify(S)); }
+  catch(e) { /* O app continua funcionando mesmo se o navegador bloquear o armazenamento. */ }
+}
+function toast(t){const el=document.getElementById("toast");el.textContent=t;el.classList.add("on");setTimeout(()=>el.classList.remove("on"),1800)}
+const wrap=document.getElementById("cards");
+SECTIONS.forEach((s,i)=>{
+  const c=document.createElement("section");
+  c.className="card"+(s.key?" key":"");
+  c.innerHTML=`<div class="head"><h2>${i+1}. ${s.title}</h2><span class="tag">${s.tag}</span></div><p class="sub">${s.sub}</p>${s.html}
+  <div class="seg" role="group" aria-label="Avaliação do ponto ${i+1}">
+    <button class="good" data-s="${s.id}" data-v="good" aria-pressed="false">Bom</button>
+    <button class="mid" data-s="${s.id}" data-v="mid" aria-pressed="false">Mediano</button>
+    <button class="poor" data-s="${s.id}" data-v="poor" aria-pressed="false">Ruim</button>
+  </div>
+  <textarea data-note="${s.id}" placeholder="O que pode melhorar neste ponto…" aria-label="O que melhorar no ponto ${i+1}"></textarea>`;
+  wrap.appendChild(c);
+});
+function render(){
+  let done=0,k=0,d=0,t=0;
+  SECTIONS.forEach(s=>{
+    const v=(S[s.id]||{}).v;
+    document.querySelectorAll(`button[data-s="${s.id}"]`).forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===v));
+    if(v){done++;if(v==="good")k++;if(v==="mid")d++;if(v==="poor")t++}
+  });
+  document.getElementById("count").textContent=done+" de "+SECTIONS.length+" pontos avaliados";
+  document.getElementById("tally").textContent=done?`${k} bom · ${d} mediano · ${t} ruim`:"";
+  document.getElementById("fill").style.width=(done/SECTIONS.length*100)+"%";
+}
+document.querySelectorAll("textarea").forEach(ta=>{
+  const id=ta.dataset.note; ta.value=(S[id]||{}).n||"";
+  ta.addEventListener("input",()=>{S[id]=S[id]||{};S[id].n=ta.value;save()});
+});
+document.addEventListener("click",e=>{
+  const b=e.target.closest("button[data-s]"); if(!b)return;
+  const id=b.dataset.s; S[id]=S[id]||{};
+  S[id].v=S[id].v===b.dataset.v?null:b.dataset.v; save(); render();
+});
+const LBL={good:"Bom",mid:"Mediano",poor:"Ruim"};
+document.getElementById("copy").addEventListener("click", async()=>{
+  let out="CASO FSM — avaliação e melhorias\\n\\n";
+  SECTIONS.forEach((s,i)=>{
+    const x=S[s.id]||{};
+    out+=`${i+1}. ${s.title}: ${LBL[x.v]||"sem avaliação"}\\n`;
+    if(x.n) out+=x.n+"\\n";
+    out+="\\n";
+  });
+  const ex=(S.extra||{}).n;
+  if(ex) out+="Outros pontos a incluir:\\n"+ex+"\\n";
+  try {
+    if(navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(out);
+    } else {
+      const field=document.createElement("textarea");
+      field.value=out;
+      field.style.position="fixed";
+      field.style.opacity="0";
+      document.body.appendChild(field);
+      field.select();
+      const ok=document.execCommand("copy");
+      field.remove();
+      if(!ok) throw new Error("Cópia indisponível");
+    }
+    toast("Anotações copiadas");
+  } catch(e) {
+    window.prompt("Copie suas anotações usando Ctrl+C:", out);
+  }
+});
+document.getElementById("reset").addEventListener("click",()=>{
+  if(!confirm("Apagar todas as marcações e anotações?"))return;
+  S={};save();document.querySelectorAll("textarea").forEach(t=>t.value="");render();toast("Tudo limpo");
+});
+render();
+</script>
+</body>
+</html>
